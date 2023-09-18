@@ -25,7 +25,7 @@ def account_exists(func):
 
         if not (from_account in account_nums or to_account in account_nums):
             raise Exception("one of the accounts in this transaction does not exist")
-        res = func
+        res = func(name, amount, from_account, to_account)
         return res
 
     return check_account
@@ -33,9 +33,9 @@ def account_exists(func):
 
 def positive_amount(func):
     def check_amount(name, amount, from_account, to_account):
-        if amount <= 0:
+        if int(amount) <= 0:
             raise Exception("amount must be $1 or greater")
-        res = func
+        res = func(name, amount, from_account, to_account)
         return res
 
     return check_amount
@@ -57,10 +57,8 @@ def create_account(name, account_number):
 
 def show_transactions():
     for transaction in transactions:
-        print(transaction.name + " ")
-        print(transaction.amount + " ")
-        print(transaction.from_account + " ")
-        print(transaction.to_account + " ")
+        print(transaction.name + " " + transaction.amount + " " + transaction.from_account + " " +
+              transaction.to_account)
 
 
 if __name__ == '__main__':
